@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import string
 
+
 class alphabet:
     def __init__(self,alphabet):
         self.alphabet = alphabet
@@ -11,7 +12,7 @@ class alphabet:
         for word in text:
             if word.lower() == self.alphabet:
                 self.count += 1
-        self.percentage = (float(self.count)/float(len(text)))*100
+        self.percentage = "%.0f" % ((float(self.count)/float(len(text)))*100) + "%"
 
 
 class code:
@@ -21,6 +22,7 @@ class code:
             encrypted_code = input("Enter string to analyze : ")
         alphabets = [alphabet(i) for i in string.ascii_lowercase]
         
+        temp = {}
         print("\n+==================================+")
         print("+  Alphabet : Count :  Percentage  +")
         print("+==================================+")
@@ -28,7 +30,11 @@ class code:
             letter.count_freq(encrypted_code)
 
             if letter.count > 0:
-                print("+{:^11}|{:^7}|{:^14.5}+".format(letter.alphabet,letter.count,(str(letter.percentage)+"%")))
+                temp[letter.alphabet] = [letter.count,letter.percentage]
+
+        result = sorted(temp.items(), key=lambda t: t[1],reverse=True)
+        for item in result:
+            print("+{:^11}|{:^7}|{:^14.5}+".format(item[0],item[1][0],item[1][1]))
         print("+==================================+")
 
 
